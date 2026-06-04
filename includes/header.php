@@ -492,6 +492,9 @@ main {
             <?php if ($user): ?>
             <li><a href="<?= SITE_URL ?>/predictions.php" class="<?= $page==='predictions'?'active':'' ?>"><?= t('پیش‌بینی‌هام','My Predictions') ?></a></li>
             <li><a href="<?= SITE_URL ?>/wallet.php" class="<?= $page==='wallet'?'active':'' ?>"><?= t('کیف پول','Wallet') ?></a></li>
+            <?php if (getSetting('subscription_required','0')==='1' && ($user['subscription_status']??'free')==='free'): ?>
+            <li><a href="<?= SITE_URL ?>/subscription.php" style="color:var(--gold);background:var(--gold-glow)">💎 <?= t('خرید اشتراک','Get Premium') ?></a></li>
+            <?php endif; ?>
             <?php if (isAdmin()): ?>
             <li><a href="<?= SITE_URL ?>/admin/index.php" class="<?= strpos($page,'admin')!==false?'active':'' ?>" style="color:var(--gold)">⚙️ <?= t('ادمین','Admin') ?></a></li>
             <?php endif; ?>
@@ -546,6 +549,9 @@ main {
     <a href="<?= SITE_URL ?>/predictions.php">🎯 <?= t('پیش‌بینی‌هام','My Predictions') ?></a>
     <a href="<?= SITE_URL ?>/wallet.php">🪙 <?= t('کیف پول','Wallet') ?> (<?= number_format($user['coins']) ?>)</a>
     <a href="<?= SITE_URL ?>/notifications.php">🔔 <?= t('اعلان‌ها','Notifications') ?><?= $unreadNotifs>0?" ($unreadNotifs)":'' ?></a>
+    <?php if (getSetting('subscription_required','0')==='1' && ($user['subscription_status']??'free')==='free'): ?>
+    <a href="<?= SITE_URL ?>/subscription.php" style="color:var(--gold)">💎 <?= t('خرید اشتراک','Get Premium') ?></a>
+    <?php endif; ?>
     <?php if (isAdmin()): ?>
     <a href="<?= SITE_URL ?>/admin/index.php" style="color:var(--gold)">⚙️ <?= t('پنل ادمین','Admin Panel') ?></a>
     <?php endif; ?>

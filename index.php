@@ -43,9 +43,12 @@ $postType = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['predict'])) {
     $perm = canUserPredict();
     if (!$perm['can']) {
+        if ($perm['reason'] === 'subscription' || $perm['reason'] === 'expired') {
+            redirect('subscription.php');
+        }
         $postMsg = match($perm['reason']) {
             'login'        => t('ابتدا وارد شوید','Please login first'),
-            'subscription' => t('برای پیش‌بینی اشتراک لازم است','Subscription required to predict'),
+            'subscription' => t('برای پیش‌بینی اشتراک پریمیوم لازم است','Premium subscription required to predict'),
             'expired'      => t('اشتراک شما منقضی شده','Your subscription has expired'),
             'closed'       => t('پیش‌بینی‌ها فعلاً بسته هستند','Predictions are closed'),
             default        => t('خطا','Error'),
